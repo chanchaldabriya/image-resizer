@@ -1,0 +1,10 @@
+.ImageUploader {
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    width: 80%;
+}
+
+.ImageUploader > h4 {
+    color: #999;
+}
