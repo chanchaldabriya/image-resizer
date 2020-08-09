@@ -1,0 +1,18 @@
+.ResizedImages {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    background-color: wheat;
+    padding: 20px;
+}
+
+.ResizedImages-image {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: white;
+}

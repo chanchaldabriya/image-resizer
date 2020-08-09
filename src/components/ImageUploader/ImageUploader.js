@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./ImageUploader.css";
-import { getFileDimensions } from "../../util/Util";
-import { VALID_DIMENSIONS } from '../../util/Constants'; 
+import { getFileDimensions, uploadImageToCloud } from "../../util/Util";
+import { VALID_DIMENSIONS } from "../../util/Constants";
 
-const ImageUploader = () => {
+const ImageUploader = ({history}) => {
   const [imgFile, setImgFile] = useState(null);
+  const [isUploaded, setUploaded] = useState(false);
   const [fileDetails, setFileDetails] = useState({
     width: 0,
     height: 0,
@@ -28,15 +29,24 @@ const ImageUploader = () => {
       );
   }, [imgFile]);
 
-  const uploadFile = () => {};
+  const uploadFile = () => {
+    uploadImageToCloud(imgFile).then((resp) => {
+      setUploaded(true);
+    });
+  };
 
   const isValidImage =
-    fileDetails.width === VALID_DIMENSIONS.WIDTH && fileDetails.height === VALID_DIMENSIONS.HEIGHT;
+    fileDetails.width === VALID_DIMENSIONS.WIDTH &&
+    fileDetails.height === VALID_DIMENSIONS.HEIGHT;
 
   return (
     <div className="ImageUploader">
       <h2>Upload image</h2>
-      <h4>Upload image of size {`(${VALID_DIMENSIONS.WIDTH} X ${VALID_DIMENSIONS.HEIGHT})`} to resize</h4>
+      <h4>
+        Upload image of size{" "}
+        {`(${VALID_DIMENSIONS.WIDTH} X ${VALID_DIMENSIONS.HEIGHT})`} to
+        resize...
+      </h4>
 
       <div>
         <input
@@ -63,6 +73,11 @@ const ImageUploader = () => {
       </div>
 
       <p>or drop image here...</p>
+
+      <div>{isUploaded && <button onClick={() => {
+        debugger;
+        history.push(`/resize/${imgFile.name}`);
+      }}>Resize Image</button>}</div>
     </div>
   );
 };
